@@ -24,7 +24,7 @@ var (
 			if pretty || json || detail {
 				postgres.HandleBackupListWithFlagsAndTarget(folder, pretty, json, detail, utility.CatchupPath)
 			} else {
-				internal.DefaultHandleBackupListWithTarget(folder, utility.CatchupPath)
+				internal.DefaultHandleBackupList(folder, utility.CatchupPath)
 			}
 		},
 	}

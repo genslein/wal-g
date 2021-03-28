@@ -11,7 +11,6 @@ import (
 	"github.com/jedib0t/go-pretty/table"
 	"github.com/wal-g/storages/storage"
 	"github.com/wal-g/tracelog"
-	"github.com/wal-g/wal-g/utility"
 )
 
 type InfoLogger interface {
@@ -27,13 +26,11 @@ type Logging struct {
 	ErrorLogger ErrorLogger
 }
 
-func DefaultHandleBackupList(folder storage.Folder) {
-	DefaultHandleBackupListWithTarget(folder, utility.BaseBackupPath)
-}
 
-func DefaultHandleBackupListWithTarget(folder storage.Folder, targetPath string) {
+
+func DefaultHandleBackupList(folder storage.Folder) {
 	getBackupsFunc := func() ([]BackupTime, error) {
-		return GetBackupsWithTarget(folder, targetPath)
+		return GetBackups(folder)
 	}
 	writeBackupListFunc := func(backups []BackupTime) {
 		WriteBackupList(backups, os.Stdout)
