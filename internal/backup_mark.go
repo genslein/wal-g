@@ -189,7 +189,7 @@ func newBackupHasPermanentBackupInFutureError(backupName string) BackupHasPerman
 
 func GetPermanentBackups(folder storage.Folder, metaFetcher GenericMetaFetcher) map[string]bool {
 	tracelog.InfoLogger.Println("retrieving permanent objects")
-	backupTimes, err := GetBackups(folder)
+	backupTimes, err := GetBackups(folder.GetSubFolder(utility.BaseBackupPath))
 	if err != nil {
 		return map[string]bool{}
 	}
