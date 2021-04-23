@@ -14,13 +14,9 @@ import (
 	"github.com/wal-g/wal-g/utility"
 )
 
-func HandleBackupListWithFlags(folder storage.Folder, pretty bool, json bool, detail bool) {
-	HandleBackupListWithFlagsAndTarget(folder, pretty, json, detail, utility.BaseBackupPath)
-}
-
 // TODO : unit tests
-func HandleBackupListWithFlagsAndTarget(folder storage.Folder, pretty bool, json bool, detail bool, targetPath string) {
-	backups, err := internal.GetBackupsWithTarget(folder, targetPath)
+func HandleBackupListWithFlags(folder storage.Folder, pretty bool, json bool, detail bool) {
+	backups, err := internal.GetBackups(folder)
 	if len(backups) == 0 {
 		tracelog.InfoLogger.Println("No backups found")
 		return

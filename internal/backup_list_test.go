@@ -3,6 +3,7 @@ package internal_test
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/wal-g/wal-g/utility"
 	"testing"
 	"time"
 
@@ -13,7 +14,7 @@ import (
 
 func TestBackupListFindsBackups(t *testing.T) {
 	folder := testtools.CreateMockStorageFolder()
-	internal.DefaultHandleBackupList(folder)
+	internal.DefaultHandleBackupList(folder.GetSubFolder(utility.CatchupPath))
 }
 
 var backups = []internal.BackupTime{
