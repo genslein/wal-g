@@ -11,7 +11,6 @@ import (
 	"github.com/wal-g/storages/storage"
 	"github.com/wal-g/tracelog"
 	"github.com/wal-g/wal-g/internal"
-	"github.com/wal-g/wal-g/utility"
 )
 
 // TODO : unit tests
@@ -48,13 +47,9 @@ func HandleBackupListWithFlags(folder storage.Folder, pretty bool, json bool, de
 }
 
 func GetBackupsDetails(folder storage.Folder, backups []internal.BackupTime) ([]BackupDetail, error) {
-	return GetBackupsDetailsWithTarget(folder, backups, utility.BaseBackupPath)
-}
-
-func GetBackupsDetailsWithTarget(folder storage.Folder, backups []internal.BackupTime, targetPath string) ([]BackupDetail, error) {
 	backupsDetails := make([]BackupDetail, 0, len(backups))
 	for i := len(backups) - 1; i >= 0; i-- {
-		details, err := GetBackupDetailsWithTarget(folder, backups[i], targetPath)
+		details, err := GetBackupDetails(folder, backups[i])
 		if err != nil {
 			return nil, err
 		}
@@ -64,11 +59,7 @@ func GetBackupsDetailsWithTarget(folder storage.Folder, backups []internal.Backu
 }
 
 func GetBackupDetails(folder storage.Folder, backupTime internal.BackupTime) (BackupDetail, error) {
-	return GetBackupDetailsWithTarget(folder, backupTime, utility.BaseBackupPath)
-}
-
-func GetBackupDetailsWithTarget(folder storage.Folder, backupTime internal.BackupTime, targetPath string) (BackupDetail, error) {
-	backup := NewBackup(folder.GetSubFolder(targetPath), backupTime.BackupName)
+	backup := NewBackup(folder, backupTime.BackupName)
 
 	metaData, err := backup.FetchMeta()
 	if err != nil {
